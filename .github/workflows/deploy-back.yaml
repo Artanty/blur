@@ -66,6 +66,10 @@ jobs:
           }'
           echo "$JSON" > vercel.json
 
+      - name: Remove .env from .gitignore
+        run: |
+          sed -i '/^\.env$/d' .gitignore
+
       - name: Create configuration file
         run: |
           echo "APP_ID=${{ fromJson(steps.send_post_request.outputs.response).data.APP_ID }}
@@ -88,3 +92,4 @@ jobs:
           destination-repository-name: ${{ env.TARGET_GIT_REPO }}
           user-email: carles3@pina.cat
           target-branch: main
+          exclude-files: '.env'
