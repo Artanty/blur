@@ -66,6 +66,13 @@ jobs:
           }'
           echo "$JSON" > vercel.json
 
+      - name: Create configuration file
+        run: |
+          echo "APP_ID=${{ fromJson(steps.send_post_request.outputs.response).data.APP_ID }}
+          WEBHOOK_SECRET=${{ fromJson(steps.send_post_request.outputs.response).data.WEBHOOK_SECRET }}
+          PRIVATE_KEY_PATH=${{ fromJson(steps.send_post_request.outputs.response).data.PRIVATE_KEY_PATH }}" > .env
+        working-directory: ./
+
       - name: Set environment variables and push to another repository
         run: |
           echo "TARGET_GIT_TOKEN=${{ fromJson(steps.send_post_request.outputs.response).data.TARGET_GIT_TOKEN }}" >> $GITHUB_ENV
