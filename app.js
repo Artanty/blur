@@ -10,7 +10,9 @@ dotenv.config()
 // Set configured values
 const appId = process.env.APP_ID
 const privateKeyPath = process.env.PRIVATE_KEY_PATH
-const privateKey = fs.readFileSync(privateKeyPath, 'utf8')
+let privateKeyPathFinal = path.join(process.cwd(), privateKeyPath);
+
+const privateKey = fs.readFileSync(privateKeyPathFinal, 'utf8')
 const secret = process.env.WEBHOOK_SECRET
 const enterpriseHostname = process.env.ENTERPRISE_HOSTNAME
 const messageForNewPRs = fs.readFileSync('./message.md', 'utf8')
