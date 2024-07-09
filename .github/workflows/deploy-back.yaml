@@ -14,8 +14,7 @@ jobs:
         uses: actions/checkout@v2
       
 
-      - name: Create vercel.json file if TARGET_VERCEL_JSON is present
-        if: steps.check_vercel_json.outputs.vercel_json_present == 'true'
+      - name: Create vercel.json file
         run: |
           JSON='{
             "version": 2,
