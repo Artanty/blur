@@ -5,7 +5,7 @@ import { Octokit, App } from 'octokit';
 dotenv.config();
 
 const appId = process.env.APP_ID;
-const privateKey = process.env.PRIVATE_KEY_PATH;
+const privateKey = process.env.PRIVATE_KEY;
 const secret = process.env.WEBHOOK_SECRET;
 const enterpriseHostname = process.env.ENTERPRISE_HOSTNAME;
 
