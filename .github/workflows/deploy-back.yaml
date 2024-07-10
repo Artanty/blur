@@ -105,5 +105,7 @@ jobs:
       - name: Use the token
         env:
           GH_TOKEN: ${{ steps.generate-token.outputs.token }}
+          OWNER: Artanty
+          REPO: blur
         run: |
           gh api octocat
