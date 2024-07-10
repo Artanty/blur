@@ -69,11 +69,11 @@ app.webhooks.onError((error) => {
 
 // Launch a web server to listen for GitHub webhooks
 const port = process.env.PORT || 3000
-const path = '/api/webhook'
-const localWebhookUrl = `http://localhost:${port}${path}`
+const path2 = '/api/webhook'
+const localWebhookUrl = `http://localhost:${port}${path2}`
 
 // See https://github.com/octokit/webhooks.js/#createnodemiddleware for all options
-const middleware = createNodeMiddleware(app.webhooks, { path })
+const middleware = createNodeMiddleware(app.webhooks, { path2 })
 
 http.createServer(middleware).listen(port, () => {
   console.log(`Server is listening for events at: ${localWebhookUrl}`)
