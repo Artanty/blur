@@ -44,7 +44,7 @@ app.webhooks.on('pull_request.opened', async ({ octokit, payload }) => {
       owner: payload.repository.owner.login,
       repo: payload.repository.name,
       issue_number: payload.pull_request.number,
-      body: 'messageForNewPRs'
+      body: 'messageForNewPRs1'
     })
   } catch (error) {
     if (error.response) {
