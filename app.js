@@ -14,7 +14,7 @@ const secret = process.env.WEBHOOK_SECRET
 const enterpriseHostname = process.env.ENTERPRISE_HOSTNAME
 const messageForNewPRs = fs.readFileSync('./message.md', 'utf8')
 
-console.log('CONSOLE')
+console.log('CONSOLE1')
 // Create an authenticated Octokit client authenticated as a GitHub App
 const app = new App({
   appId,
