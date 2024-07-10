@@ -10,7 +10,7 @@ const secret_name = 'WIRE_URL'
 dotenv.config();
 
 const appId = process.env.APP_ID;
-const privateKey = process.env.PRIVATE_KEY.replace(/\\n/g, '\n');
+const privateKey = process.env.PRIVATE_KEY//.replace(/\\n/g, '\n');
 const secret = process.env.WEBHOOK_SECRET;
 
 
