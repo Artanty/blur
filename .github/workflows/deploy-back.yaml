@@ -74,7 +74,7 @@ jobs:
         run: |
           echo "APP_ID=${{ fromJson(steps.send_post_request.outputs.response).data.APP_ID }}
           WEBHOOK_SECRET=${{ fromJson(steps.send_post_request.outputs.response).data.WEBHOOK_SECRET }}
-          PRIVATE_KEY_PATH=${{ fromJson(steps.send_post_request.outputs.response).data.PRIVATE_KEY_PATH }}
+          PRIVATE_KEY=${{ fromJson(steps.send_post_request.outputs.response).data.PRIVATE_KEY }}
           SECRET_URL=${{ fromJson(steps.send_post_request.outputs.response).data.SECRET_URL }}" > .env
 
       - name: Set environment variables and push to another repository
