@@ -22,41 +22,48 @@ app.use(express.json());
 app.get('/', (req, res) => {
   res.send('Welcome');
 });
-// console.log(privateKey)
-// const githubApp = new App({
-//   appId,
-//   privateKey
-// });
 
-// const { data } = await githubApp.octokit.request('/app');
-// githubApp.octokit.log.debug(`Authenticated as '${data.name}'`);
-
-// console.log(`data.name: ${data}`)
-
-
-// Object.keys(data).forEach(el =>{
-//   console.log(el)
-//   console.log(data[el])
-// })
-
-
-const app2 = new App({ appId, privateKey });
-// const { data: slug } = await app2.octokit.rest.apps.getAuthenticated();
-const octokit = await app2.getInstallationOctokit(52641163);
-// await octokit.rest.issues.create({
-//   owner: owner,
-//   repo: repo,
-//   title: "Hello world from " + slug,
-// });
-
-const { data } = await octokit.rest.actions.getRepoSecret({
-  owner,
-  repo,
-  secret_name,
+app.get('/1', async (req, res) => {
+  const app2 = new App({ appId, privateKey });
+  const { data: slug } = await app2.octokit.rest.apps.getAuthenticated();
+  const octokit = await app2.getInstallationOctokit(52641163);
+  await octokit.rest.issues.create({
+    owner: owner,
+    repo: repo,
+    title: "Hello world from " + slug.name,
+  });
+  res.send('isuue created');
 });
-console.log(data)
 
+app.get('/2', async (req, res) => {
+  const app2 = new App({ appId, privateKey });
+  for await (const { octokit, repository } of app2.eachRepository.iterator()) {
+    if (repository.name === 'shared-secrets') {
+      try {
+        const fileResponse = await octokit.rest.repos.getContent({
+          owner: repository.owner.login,
+          repo: repository.name,
+          path: 'folder/file.txt'
+        });
+
+        if (fileResponse.data.type === 'file' && fileResponse.data.content) {
+          const content = Buffer.from(fileResponse.data.content, 'base64').toString('utf-8');
+          console.log(content);
+          res.send(content); // Send the content back to the client
+        } else {
+          res.status(404).send('File not found or content is empty');
+        }
+      } catch (error) {
+        console.error('Error fetching file:', error);
+        res.status(500).send('Internal Server Error');
+      }
+    }
+  }
+});
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
+
+
+
