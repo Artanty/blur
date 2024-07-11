@@ -35,13 +35,7 @@ app.use(express.json());
 //   console.log(el)
 //   console.log(data[el])
 // })
-// await githubApp.octokit.rest.issues.create({
-//   owner: owner,
-//   repo: repo,
-//   title: "Hello, world!",
-//   body: "I created this issue using Octokit!",
-//   installationId: 940632
-// });
+
 
 const app2 = new App({ appId, privateKey });
 // const { data: slug } = await app2.octokit.rest.apps.getAuthenticated();
