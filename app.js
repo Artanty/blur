@@ -5,7 +5,8 @@ import { createAppAuth } from "@octokit/auth-app";
 
 const owner = 'Artanty'
 const repo = 'shared-secrets'
-const secret_name = 'WIRE_URL'
+const state = 'DEPLOY'
+const secretName = 'WIRE_URL'
 
 dotenv.config();
 
@@ -18,36 +19,24 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 
 app.get('/', (req, res) => {
-  res.send('Welcome');
+  res.send("you shouldn't be here");
 });
 
-app.get('/1', async (req, res) => {
-  const app2 = new App({ appId, privateKey });
-  const { data: slug } = await app2.octokit.rest.apps.getAuthenticated();
-  const octokit = await app2.getInstallationOctokit(52641163);
-  await octokit.rest.issues.create({
-    owner: owner,
-    repo: repo,
-    title: "Hello world from " + slug.name,
-  });
-  res.send('isuue created');
-});
-
-app.get('/2', async (req, res) => {
+app.post('/get', async (req, res) => {
   const app2 = new App({ appId, privateKey });
   for await (const { octokit, repository } of app2.eachRepository.iterator()) {
-    if (repository.name === 'shared-secrets') {
+    if (repository.name === repo) {
       try {
         const fileResponse = await octokit.rest.repos.getContent({
           owner: repository.owner.login,
           repo: repository.name,
-          path: 'folder/file.txt'
+          path: `${state}/${secretName}`
         });
 
         if (fileResponse.data.type === 'file' && fileResponse.data.content) {
           const content = Buffer.from(fileResponse.data.content, 'base64').toString('utf-8');
           console.log(content);
-          res.send(content); // Send the content back to the client
+          res.send(content);
         } else {
           res.status(404).send('File not found or content is empty');
         }
